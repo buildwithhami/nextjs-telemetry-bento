@@ -1,5 +1,5 @@
 # Interactive Bento Grid
-> **Live Demo:** [View Interactive Bento Grid] (https://nextjs-telemetry-bento-beta.vercel.app)
+> **Live Demo:** View Interactive Bento Grid: (https://nextjs-telemetry-bento-beta.vercel.app)
 > 
 > Built as a clean 4-card UI showcase in Next.js and TypeScript with simulated telemetry data, smooth motion transitions, and mobile-friendly interactions. Feel free to explore the live preview, inspect the code, or adapt any part of it for your own UI experiments.
 
