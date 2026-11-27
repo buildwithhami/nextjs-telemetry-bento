@@ -1,0 +1,65 @@
+{
+  "cards": {
+    "events": {
+      "icon": "stream",
+      "title": "Real-time event pipeline",
+      "desc": "Webhooks and streams land in one validated, ordered log. Filter by source, replay failures, and fire a test event before you ship.",
+      "intervalMs": 4200,
+      "templates": [
+        { "type": "webhook", "status": 200, "payload": "{\"event\":\"invoice.paid\",\"id\":\"evt_%\"}" },
+        { "type": "webhook", "status": 200, "payload": "{\"event\":\"order.created\",\"id\":\"evt_%\"}" },
+        { "type": "webhook", "status": 202, "payload": "{\"event\":\"user.updated\",\"id\":\"evt_%\"}" },
+        { "type": "stream", "status": 200, "payload": "{\"topic\":\"metrics.batch\",\"n\":128}" },
+        { "type": "error", "status": 422, "payload": "{\"error\":\"schema_mismatch\",\"id\":\"evt_%\"}" },
+        { "type": "error", "status": 429, "payload": "{\"error\":\"rate_limited\",\"id\":\"evt_%\"}" }
+      ],
+      "testEvent": {
+        "type": "webhook",
+        "status": 200,
+        "payload": "{\"event\":\"test.ping\",\"id\":\"evt_%\"}"
+      }
+    },
+    "regions": {
+      "icon": "globe",
+      "title": "Edge latency & routing",
+      "desc": "Requests resolve at the nearest region. Take one down and traffic reroutes on its own.",
+      "defaultActiveId": "iad1",
+      "tickMs": 2200,
+      "items": [
+        { "id": "iad1", "base": 14, "city": "Virginia" },
+        { "id": "fra1", "base": 22, "city": "Frankfurt" },
+        { "id": "sin1", "base": 31, "city": "Singapore" },
+        { "id": "hnd1", "base": 27, "city": "Tokyo" }
+      ]
+    },
+    "beam": {
+      "icon": "link",
+      "title": "Integration beam hub",
+      "desc": "Every source and destination routes through a single hub, so adding a new connection never means rewiring the rest.",
+      "hubLabel": "Pipeline hub",
+      "nodes": [
+        { "k": "webhook", "label": "Webhook", "icon": "link", "side": "l", "row": "t", "top": "27%", "dy": -8, "delay": 0 },
+        { "k": "queue", "label": "Queue", "icon": "queue", "side": "l", "row": "b", "top": "73%", "dy": 8, "delay": -0.48 },
+        { "k": "store", "label": "Store", "icon": "store", "side": "r", "row": "t", "top": "27%", "dy": -8, "delay": -0.96 },
+        { "k": "audit", "label": "Audit", "icon": "audit", "side": "r", "row": "b", "top": "73%", "dy": 8, "delay": -1.44 }
+      ]
+    },
+    "activity": {
+      "icon": "chart",
+      "title": "Live activity & telemetry",
+      "desc": "Releases, policy changes and incidents in one stack, with throughput and tail latency for the window you pick.",
+      "defaultWindow": "1h",
+      "rotateMs": 10000,
+      "feed": [
+        { "t": "01 · Schema v2.14.0 validated", "m": "schema · 1,204 samples · 4m ago", "s": "ok" },
+        { "t": "02 · Edge rollout promoted", "m": "deploy · 4 regions · 2m ago", "s": "" },
+        { "t": "03 · Telemetry & rules synced", "m": "runtime · ruleset v14 · just now", "s": "warn" }
+      ],
+      "windows": {
+        "1h": { "req": 1922, "p99": 118, "err": 0.12 },
+        "24h": { "req": 46308, "p99": 124, "err": 0.09 },
+        "7d": { "req": 318940, "p99": 131, "err": 0.11 }
+      }
+    }
+  }
+}
